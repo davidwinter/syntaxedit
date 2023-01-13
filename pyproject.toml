@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "syntaxedit"
+version = "0.1.0"
+description = "Syntax highlighting Qt text widget"
+license = "MIT"
+authors = ["David Winter <i@djw.me>"]
+readme = "README.md"
+homepage = "https://github.com/davidwinter/syntaxedit"
+repository = "https://github.com/davidwinter/syntaxedit"
+keywords = ["qt", "pyside", "pyqt", "syntax highlighting"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Desktop Environment",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Widget Sets",
+    "Topic :: Text Editors",
+    "Topic :: Text Processing"
+]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<3.12"
+qtpy = "^2.3.0"
+pygments = "^2.14.0"
+
+
+[tool.poetry.group.test.dependencies]
+pyside6 = "^6.4.2"
+pytest = "^7.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
