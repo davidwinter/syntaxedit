@@ -1,6 +1,8 @@
 import sys
 import pygments
 
+from pathlib import Path
+
 from syntaxedit.core import SyntaxEdit;
 
 from qtpy.QtWidgets import (
@@ -19,7 +21,9 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.editor = SyntaxEdit("# hello\n- hello\n[Google](https://google.com)\n")
+        contents = Path(__file__).read_text()
+
+        self.editor = SyntaxEdit(contents, language = "Python")
         self.editor.textChanged.connect(self.editor_changed)
 
         style_language = QHBoxLayout()
