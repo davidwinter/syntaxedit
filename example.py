@@ -1,21 +1,14 @@
 import sys
-import pygments
-
 from pathlib import Path
 
-from syntaxedit.core import SyntaxEdit;
+import pygments
+from qtpy.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
+                            QVBoxLayout, QWidget)
 
-from qtpy.QtWidgets import (
-    QMainWindow,
-    QVBoxLayout,
-    QHBoxLayout,
-    QComboBox,
-    QWidget
-)
-
-from qtpy.QtWidgets import QApplication
+from syntaxedit.core import SyntaxEdit
 
 app = QApplication(sys.argv)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -23,7 +16,7 @@ class MainWindow(QMainWindow):
 
         contents = Path(__file__).read_text()
 
-        self.editor = SyntaxEdit(contents, language = "Python")
+        self.editor = SyntaxEdit(contents, language="Python")
         self.editor.textChanged.connect(self.editor_changed)
 
         style_language = QHBoxLayout()
@@ -67,6 +60,7 @@ class MainWindow(QMainWindow):
     def editor_changed(self):
         print("editor changed")
         print(self.editor.toPlainText())
+
 
 window = MainWindow()
 window.show()

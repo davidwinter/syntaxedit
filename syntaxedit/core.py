@@ -1,12 +1,19 @@
-from qtpy.QtWidgets import QTextEdit;
-from qtpy import QtGui
-
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
+from qtpy import QtGui
+from qtpy.QtWidgets import QTextEdit
+
 
 class SyntaxEdit(QTextEdit):
-    def __init__(self, content = "", parent = None, font="Courier New", language="Markdown", style="solarized-light"):
+    def __init__(
+        self,
+        content="",
+        parent=None,
+        font="Courier New",
+        language="Markdown",
+        style="solarized-light",
+    ):
         super().__init__("", parent)
 
         self._font = font
@@ -14,7 +21,8 @@ class SyntaxEdit(QTextEdit):
         new_font = QtGui.QFont(self._font)
         self.setFont(new_font)
         self.setTabStopDistance(
-            QtGui.QFontMetricsF(self.font()).horizontalAdvance(' ') * 4)
+            QtGui.QFontMetricsF(self.font()).horizontalAdvance(" ") * 4
+        )
 
         self.setPlainText(content)
 
@@ -51,8 +59,8 @@ class SyntaxEdit(QTextEdit):
                 prestyles=f"white-space:pre-wrap; font-family: '{self._font}';",
                 noclasses=True,
                 nobackground=True,
-                style=self.style()
-            )
+                style=self.style(),
+            ),
         )
 
         position = self.textCursor().position()
