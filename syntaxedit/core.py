@@ -1,8 +1,7 @@
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import get_lexer_by_name
 from qtpy import QtGui
 from qtpy.QtWidgets import QTextEdit
+
+from .highlightslot import HighlightSlot
 
 
 class SyntaxEdit(QTextEdit):
@@ -11,64 +10,61 @@ class SyntaxEdit(QTextEdit):
         content="",
         parent=None,
         font="Courier New",
-        language="Markdown",
-        style="solarized-light",
+        syntax="Markdown",
+        theme="solarized-light",
+        indentation_size=4,
+        highlight_slot_class=HighlightSlot,
     ):
         super().__init__("", parent)
 
-        self._font = font
+        self._indentation_size = indentation_size
 
-        new_font = QtGui.QFont(self._font)
-        self.setFont(new_font)
+        self.setFont(QtGui.QFont(font))
         self.setTabStopDistance(
             QtGui.QFontMetricsF(self.font()).horizontalAdvance(" ") * 4
         )
 
         self.setPlainText(content)
 
-        self._language = language
-        self._style = style
+        self._syntax = syntax
+        self._theme = theme
+
+        self._highlight_slot = highlight_slot_class(self)
 
         self._highlight_text()
 
-        self.textChanged.connect(self._highlight_text)
-
-    def setLanguage(self, language):
-        self._language = language
-        self._highlight_text()
-
-    def language(self):
-        return self._language
-
-    def style(self):
-        return self._style
-
-    def setStyle(self, style):
-        self._style = style
-        self._highlight_text()
-
-    def setContents(self, contents):
-        self.setPlainText(contents)
+        self.textChanged.connect(self._highlight_slot.execute)
 
     def _highlight_text(self):
-        markup = highlight(
-            self.toPlainText(),
-            get_lexer_by_name(self.language(), stripnl=False, ensurenl=False),
-            HtmlFormatter(
-                lineseparator="<br />",
-                prestyles=f"white-space:pre-wrap; font-family: '{self._font}';",
-                noclasses=True,
-                nobackground=True,
-                style=self.style(),
-            ),
-        )
+        self._highlight_slot.execute()
 
-        position = self.textCursor().position()
+    def setSyntax(self, syntax):
+        self._syntax = syntax
+        self._highlight_text()
 
-        self.blockSignals(True)
-        self.setHtml(markup)
-        self.blockSignals(False)
+    def syntax(self):
+        return self._syntax
 
+    def theme(self):
+        return self._theme
+
+    def setTheme(self, theme):
+        self._theme = theme
+        self._highlight_text()
+
+    def indentationSize(self):
+        return self._indentation_size
+
+    def editorFont(self):
+        return self.currentFont().family()
+
+    def cursorPosition(self):
+        return self.textCursor().position()
+
+    def setCursorPosition(self, position):
         cursor = self.textCursor()
         cursor.setPosition(position)
         self.setTextCursor(cursor)
+
+    def setContents(self, contents):
+        self.setPlainText(contents)

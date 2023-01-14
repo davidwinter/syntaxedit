@@ -2,8 +2,14 @@ import sys
 from pathlib import Path
 
 import pygments
-from qtpy.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QMainWindow,
-                            QVBoxLayout, QWidget)
+from qtpy.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QHBoxLayout,
+    QMainWindow,
+    QVBoxLayout,
+    QWidget,
+)
 
 from syntaxedit.core import SyntaxEdit
 
@@ -16,7 +22,7 @@ class MainWindow(QMainWindow):
 
         contents = Path(__file__).read_text()
 
-        self.editor = SyntaxEdit(contents, language="Python")
+        self.editor = SyntaxEdit(contents, syntax="Python")
         self.editor.textChanged.connect(self.editor_changed)
 
         style_language = QHBoxLayout()
@@ -25,13 +31,13 @@ class MainWindow(QMainWindow):
         self.lexers = QComboBox()
         self.lexers.setEditable(False)
         self.lexers.addItems([i[0] for i in pygments.lexers.get_all_lexers()])
-        self.lexers.setCurrentText(self.editor.language())
+        self.lexers.setCurrentText(self.editor.syntax())
         self.lexers.currentIndexChanged.connect(self.language_changed)
 
         self.styles = QComboBox()
         self.styles.setEditable(False)
         self.styles.addItems(pygments.styles.get_all_styles())
-        self.styles.setCurrentText(self.editor.style())
+        self.styles.setCurrentText(self.editor.theme())
         self.styles.currentIndexChanged.connect(self.style_changed)
 
         style_language.addWidget(self.lexers)
@@ -50,11 +56,11 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
     def language_changed(self):
-        self.editor.setLanguage(self.lexers.currentText())
+        self.editor.setSyntax(self.lexers.currentText())
         print("Language changed")
 
     def style_changed(self):
-        self.editor.setStyle(self.styles.currentText())
+        self.editor.setTheme(self.styles.currentText())
         print("Style changed")
 
     def editor_changed(self):
