@@ -10,6 +10,9 @@ jobs:
   lint_and_test:
     runs-on: ubuntu-latest
 
+    env:
+      DISPLAY: ':99.0'
+
     steps:
       - uses: actions/checkout@v3
       - run: pipx install poetry
@@ -19,7 +22,7 @@ jobs:
           cache: 'poetry'
       - run: |
           sudo apt-get update -y
-          sudo apt-get install -y libgles2-mesa-dev
+          sudo apt-get install -y libgles2-mesa-dev libxkbcommon-x11-0
       - run: python --version
       - run: poetry install
       - run: make test
