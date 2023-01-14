@@ -10,9 +10,6 @@ jobs:
   lint_and_test:
     runs-on: ubuntu-latest
 
-    env:
-      DISPLAY: ':99.0'
-
     steps:
       - uses: actions/checkout@v3
       - run: pipx install poetry
