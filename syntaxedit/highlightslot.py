@@ -15,7 +15,11 @@ class HighlightSlot:
 
         markup = highlight(
             self.widget().toPlainText(),
-            get_lexer_by_name(self.widget().syntax(), stripnl=False, ensurenl=False),
+            get_lexer_by_name(
+                self.widget().syntax(),
+                stripnl=False,
+                ensurenl=False,
+            ),
             HtmlFormatter(
                 lineseparator="<br />",
                 prestyles=f"white-space:pre-wrap; font-family: '{font}';",

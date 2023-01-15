@@ -30,4 +30,5 @@ jobs:
           cache: 'poetry'
 
       - run: poetry install
+      - run: make lint
       - run: make test
