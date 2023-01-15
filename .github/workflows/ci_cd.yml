@@ -19,7 +19,7 @@ jobs:
           cache: 'poetry'
       - run: |
          sudo apt update -y
-         sudo apt install -y libgles2-mesa-dev
+         sudo apt install -y libgles2-mesa-dev xvfb
       - run: python --version
       - run: poetry install
       - run: make test
