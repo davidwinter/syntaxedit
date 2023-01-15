@@ -18,8 +18,8 @@ jobs:
           python-version: '3.10'
           cache: 'poetry'
       - run: |
-         sudo apt update -y
-         sudo apt install -y libgles2-mesa-dev xvfb
+         sudo apt-get update -y
+         sudo apt-get install -y libgles2-mesa-dev libxkbcommon-x11-0
       - run: python --version
       - run: poetry install
       - run: make test
