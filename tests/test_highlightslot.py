@@ -45,7 +45,7 @@ def highlight_text(text):
         get_lexer_by_name("Markdown", stripnl=False, ensurenl=False),
         HtmlFormatter(
             lineseparator="<br />",
-            prestyles=f"white-space:pre-wrap; font-family: 'Courier New';",
+            prestyles="white-space:pre-wrap; font-family: 'Courier New';",
             noclasses=True,
             nobackground=True,
             style="solarized-light",
