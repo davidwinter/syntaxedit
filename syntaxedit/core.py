@@ -10,6 +10,7 @@ class SyntaxEdit(QTextEdit):
         content="",
         parent=None,
         font="Courier New",
+        font_size=13,
         syntax="Markdown",
         theme="solarized-light",
         indentation_size=4,
@@ -18,10 +19,9 @@ class SyntaxEdit(QTextEdit):
 
         self._indentation_size = indentation_size
 
-        self.setFont(QtGui.QFont(font))
-        self.setTabStopDistance(
-            QtGui.QFontMetricsF(self.font()).horizontalAdvance(" ") * 4
-        )
+        self._font = font
+        self._font_size = font_size
+        self._setFontValues()
 
         self.setPlainText(content)
 
@@ -33,6 +33,12 @@ class SyntaxEdit(QTextEdit):
         self._highlight_text()
 
         self.textChanged.connect(self._highlight_slot.execute)
+
+    def _setFontValues(self):
+        self.setFont(QtGui.QFont(self._font, self._font_size))
+        self.setTabStopDistance(
+            QtGui.QFontMetricsF(self.font()).horizontalAdvance(" ") * 4
+        )
 
     def _highlight_text(self):
         self._highlight_slot.execute()
@@ -56,6 +62,13 @@ class SyntaxEdit(QTextEdit):
 
     def editorFont(self):
         return self.currentFont().family()
+
+    def editorFontSize(self):
+        return self.currentFont().pointSize()
+
+    def setEditorFontSize(self, size):
+        self._font_size = size
+        self._setFontValues()
 
     def cursorPosition(self):
         return self.textCursor().position()

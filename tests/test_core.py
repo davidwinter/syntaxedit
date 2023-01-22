@@ -17,6 +17,7 @@ def test_constructor_defaults(qtbot):
     assert widget.theme() == "solarized-light"
     assert widget.indentationSize() == 4
     assert widget.editorFont() == "Courier New"
+    assert widget.editorFontSize() == 13
 
     assert widget.toPlainText() == ""
 
@@ -27,13 +28,15 @@ def test_constructor_overrides(qtbot):
         syntax="HTML",
         theme="solarized-dark",
         font="Arial",
+        font_size=16,
         indentation_size=2,
     )
 
     assert widget.syntax() == "HTML"
     assert widget.theme() == "solarized-dark"
     assert widget.indentationSize() == 2
-    assert widget.currentFont().family() == "Arial"
+    assert widget.editorFont() == "Arial"
+    assert widget.editorFontSize() == 16
 
     assert widget.toPlainText() == "Hello"
 
@@ -56,3 +59,11 @@ def test_textchanged_signal_connected(qtbot, mock_highlightslot):
     widget.setPlainText("hello")
 
     assert instance.execute.call_count == 2
+
+
+def test_font_size_change(qtbot):
+    widget = SyntaxEdit(font_size=14)
+
+    widget.setEditorFontSize(16)
+
+    assert widget.editorFontSize() == 16

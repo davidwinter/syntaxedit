@@ -9,6 +9,7 @@ from qtpy.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
     QWidget,
+    QSpinBox,
 )
 
 from syntaxedit.core import SyntaxEdit
@@ -40,8 +41,15 @@ class MainWindow(QMainWindow):
         self.styles.setCurrentText(self.editor.theme())
         self.styles.currentIndexChanged.connect(self.style_changed)
 
+        self.size = QSpinBox()
+        self.size.setMinimum(10)
+        self.size.setMaximum(30)
+        self.size.setValue(self.editor.editorFontSize())
+        self.size.valueChanged.connect(self.editor.setEditorFontSize)
+
         style_language.addWidget(self.lexers)
         style_language.addWidget(self.styles)
+        style_language.addWidget(self.size)
 
         style_languagewidget = QWidget()
         style_languagewidget.setLayout(style_language)
