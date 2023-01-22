@@ -2,15 +2,43 @@ on:
   push:
     branches:
       - main
-name: release-please
+
+name: release
+
 jobs:
   release-please:
     permissions:
       contents: write
       pull-requests: write
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: python
           package-name: syntaxedit
+
+      - uses: actions/checkout@v3
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: install poetry
+        run: pipx install poetry
+        if: ${{ steps.release.outputs.release_created }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'poetry'
+        if: ${{ steps.release.outputs.release_created }}
+
+      - run: poetry install
+        if: ${{ steps.release.outputs.release_created }}
+
+      - run: poetry build
+        if: ${{ steps.release.outputs.release_created }}
+
+      - run: poetry publish
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{secrets.POETRY_PYPI_TOKEN_PYPI}}
+        if: ${{ steps.release.outputs.release_created }}
