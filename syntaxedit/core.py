@@ -13,7 +13,6 @@ class SyntaxEdit(QTextEdit):
         syntax="Markdown",
         theme="solarized-light",
         indentation_size=4,
-        highlight_slot_class=HighlightSlot,
     ):
         super().__init__("", parent)
 
@@ -29,7 +28,7 @@ class SyntaxEdit(QTextEdit):
         self._syntax = syntax
         self._theme = theme
 
-        self._highlight_slot = highlight_slot_class(self)
+        self._highlight_slot = HighlightSlot(self)
 
         self._highlight_text()
 
