@@ -1,6 +1,9 @@
 from qtpy import QtGui
 from qtpy.QtWidgets import QTextEdit
 
+from pygments.styles import get_style_by_name
+
+
 from .highlightslot import HighlightSlot
 
 
@@ -14,6 +17,7 @@ class SyntaxEdit(QTextEdit):
         syntax="Markdown",
         theme="solarized-light",
         indentation_size=4,
+        use_theme_background=True,
     ):
         super().__init__("", parent)
 
@@ -26,10 +30,23 @@ class SyntaxEdit(QTextEdit):
         self._syntax = syntax
         self._theme = theme
 
+        self._use_theme_background = use_theme_background
+
+        self._updateBackgroundColor()
+
         self._highlight_slot = HighlightSlot(self)
         self.textChanged.connect(self._highlight_slot.execute)
 
         self.setPlainText(content)
+
+    def _updateBackgroundColor(self):
+        if self._use_theme_background:
+            style = get_style_by_name(self._theme)
+            self.setStyleSheet(
+                f"QTextEdit {{ background-color: {style.background_color}; }}"
+            )
+        else:
+            self.setStyleSheet("")
 
     def _setFontValues(self):
         self.setFont(QtGui.QFont(self._font, self._font_size))
@@ -49,6 +66,7 @@ class SyntaxEdit(QTextEdit):
 
     def setTheme(self, theme):
         self._theme = theme
+        self._updateBackgroundColor()
         self.textChanged.emit()
 
     def indentationSize(self):

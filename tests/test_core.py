@@ -66,3 +66,15 @@ def test_font_size_change(qtbot):
     widget.setEditorFontSize(16)
 
     assert widget.editorFontSize() == 16
+
+
+def test_background_colour_from_theme(qtbot):
+    widget = SyntaxEdit(theme="solarized-dark")
+
+    assert "#002b36" in widget.styleSheet()
+
+
+def test_disable_setting_background_colour_from_theme(qtbot):
+    widget = SyntaxEdit(theme="solarized-dark", use_theme_background=False)
+
+    assert widget.styleSheet() == ""
