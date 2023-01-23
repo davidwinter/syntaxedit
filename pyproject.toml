@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "syntaxedit"
-version = "0.2.0"
+version = "0.3.0"
 description = "Syntax highlighting Qt text widget"
 license = "MIT"
 authors = ["David Winter <i@djw.me>"]
