@@ -55,10 +55,9 @@ def test_indentation_size(qtbot):
 def test_textchanged_signal_connected(qtbot, mock_highlightslot):
     instance = mock_highlightslot.return_value
 
-    widget = SyntaxEdit()
-    widget.setPlainText("hello")
+    SyntaxEdit("hello")
 
-    assert instance.execute.call_count == 2
+    assert instance.execute.call_count == 1
 
 
 def test_font_size_change(qtbot):

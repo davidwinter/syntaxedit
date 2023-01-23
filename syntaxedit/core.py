@@ -23,16 +23,13 @@ class SyntaxEdit(QTextEdit):
         self._font_size = font_size
         self._setFontValues()
 
-        self.setPlainText(content)
-
         self._syntax = syntax
         self._theme = theme
 
         self._highlight_slot = HighlightSlot(self)
-
-        self._highlight_text()
-
         self.textChanged.connect(self._highlight_slot.execute)
+
+        self.setPlainText(content)
 
     def _setFontValues(self):
         self.setFont(QtGui.QFont(self._font, self._font_size))
@@ -40,12 +37,9 @@ class SyntaxEdit(QTextEdit):
             QtGui.QFontMetricsF(self.font()).horizontalAdvance(" ") * 4
         )
 
-    def _highlight_text(self):
-        self._highlight_slot.execute()
-
     def setSyntax(self, syntax):
         self._syntax = syntax
-        self._highlight_text()
+        self.textChanged.emit()
 
     def syntax(self):
         return self._syntax
@@ -55,7 +49,7 @@ class SyntaxEdit(QTextEdit):
 
     def setTheme(self, theme):
         self._theme = theme
-        self._highlight_text()
+        self.textChanged.emit()
 
     def indentationSize(self):
         return self._indentation_size
