@@ -48,6 +48,7 @@
 - `syntax`: the code [syntax](https://pygments.org/languages/) to use. **Default:** `"Markdown"`
 - `theme`: the syntax [theme](https://pygments.org/styles/) to use. **Default:** `"solarized-light"`
 - `indentation_size`: the size for indentation. **Default:** `4`
+- `use_theme_background`: whether to use the background colour from the theme or to not set one. **Default:** `True`
 
 ## Authors
 
