@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/davidwinter/syntaxedit/compare/v0.2.0...v0.3.0) (2023-01-23)
+
+
+### Features
+
+* ability to use theme bg color, or disable ([87d8575](https://github.com/davidwinter/syntaxedit/commit/87d857544126bfcc7d2d047535c9f764cb6c6b9f))
+
+
+### Documentation
+
+* update README with `use_theme_background` option ([29f9581](https://github.com/davidwinter/syntaxedit/commit/29f9581c748dcbc02e6332b46ec3de9f5a505c43))
+
 ## [0.2.0](https://github.com/davidwinter/syntaxedit/compare/v0.1.1...v0.2.0) (2023-01-22)
 
 
